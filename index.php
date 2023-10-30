@@ -6,7 +6,6 @@ $min = 8;
 $max = 32;
 $message = "Scegliere una password con almeno $min  caratteri e massimo  $max  caratteri";
 $css_alert = 'success';
-$password = '';
 
 // controllo che arrivi il valore in post e che non sia una stringa vuata
 if(isset($_POST['pswlen']) && !empty($_POST['pswlen'])){
@@ -18,34 +17,27 @@ if(isset($_POST['pswlen']) && !empty($_POST['pswlen'])){
     $message = "Errore! Il valore inserito deve essere compreso fra $min e $max";
     $css_alert = 'danger';
   }else{
-    // il valore è corretto e genero la pasword
 
-    // prendo i prii caratteri della lista in base alla lunghezza scelta
-    $password = passwordGenerator($pswlen);
     
-    $message = "Password generata: <strong>$password</strong>";
-    $css_alert = 'warning';
+    // apro la sessione
+    session_start();
+
+    // creo la laviabile di sessione da inviare a success-page.php
+    $_SESSION['password'] = passwordGenerator($pswlen);
+
+    // reindirizzo all alla pagina success-page.php
+    header('Location: ./success-page.php');
 
   }
 
 }
 
+require_once __DIR__ . '/partials/head.php';
 
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.css' integrity='sha512-bR79Bg78Wmn33N5nvkEyg66hNg+xF/Q8NA8YABbj+4sBngYhv9P8eum19hdjYcY7vXk/vRkhM3v/ZndtgEXRWw==' crossorigin='anonymous'/>
-
-  <link rel="stylesheet" href="style.css">
-
-  <title>Password generator</title>
-</head>
 <body>
 
 <div class="sc-container">
