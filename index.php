@@ -17,19 +17,27 @@ if(isset($_POST['pswlen']) && !empty($_POST['pswlen'])){
     $css_alert = 'danger';
   }else{
     // il valore è corretto e genero la pasword
-    $listChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?&%$<>^+-*/()[]{}@#_=';
+
+    // mischio la lista dei caratteri
+    $listChars = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?&%$<>^+-*/()[]{}@#_=');
+
+    // prendo i prii caratteri della lista in base alla lunghezza scelta
+    $password = substr($listChars,0,$pswlen);
+    
+    $message = "Password generata: <strong>$password</strong>";
+    $css_alert = 'warning';
 
     // faccio un ciclo in base alla lunghezza inserita. 
-    for($i = 0; $i < $pswlen; $i++){
-      // ad ogni ciclo estracco un valore random dalla lista dei caratteri
-      $index_random = rand(0, strlen($listChars) - 1);
-      $char = $listChars[$index_random];
-      // concateno il carattere alla stringa della password
-      $password .= $char;
+    // for($i = 0; $i < $pswlen; $i++){
+    //   // ad ogni ciclo estracco un valore random dalla lista dei caratteri
+    //   $index_random = rand(0, strlen($listChars) - 1);
+    //   $char = $listChars[$index_random];
+    //   // concateno il carattere alla stringa della password
+    //   $password .= $char;
 
-      $message = "Password generata: <strong>$password</strong>";
-      $css_alert = 'warning';
-    }
+    //   $message = "Password generata: <strong>$password</strong>";
+    //   $css_alert = 'warning';
+    // }
   }
 
 }
